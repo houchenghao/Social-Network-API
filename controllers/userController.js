@@ -1,4 +1,4 @@
-const { User } = require('../models');
+const { User, Thought } = require('../models');
 
 module.exports = {
     async getUsers(req, res) {
@@ -40,7 +40,7 @@ module.exports = {
     async updateUser(req,res) {
         try{
             userData = await User.findOneAndUpdate(
-                {_id: req.params.userId },
+                { _id: req.params.userId },
                 { $set: req.body },
                 { runValidators: true, new: true }
             );
@@ -51,6 +51,47 @@ module.exports = {
             }
         }catch(err){
             res.status(500).json(err);
+        }
+    },
+
+    async deleteUser(req,res) {
+        try{
+            userData = await User.findOneAndDelete(
+                {_id: req.params.userId},
+            );
+            if(!userData){
+                res.status(404).json({message:'No User with this id'})
+            }else{
+                thoughtData = await Thought.deleteMany({ _id: { $in: userData.thoughts}});
+                res.json(thoughtData);
+            }
+        }catch(err){
+            res.status(500).json(err);
+        }
+    },
+
+    async addFriend(req,res) {
+        try{
+            userData = await User.findOneAndUpdate(
+                { _id: req.params.userId },
+                { $addToSet: { friends: req.params.friendId }},
+                { new: true }
+            )
+            res.json(userData);
+        }catch(err){
+            res.tatus(500).json(err);
+        }
+    },
+    async removeFriend(req,res) {
+        try{
+            userData = await User.findOneAndUpdate(
+                { _id: req.params.userId },
+                { $pull: {friends: req.params.friendId}},
+                { runValidators: true, new: true}
+            )
+            res.json(userData);
+        }catch(err){
+            res.tatus(500).json(err);
         }
     }
 };

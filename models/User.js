@@ -35,7 +35,7 @@ const userSchema = new Schema(
         toJson: {
             getters: true,
         },
-        // id: false,
+        id: false,
     }
 );
 
