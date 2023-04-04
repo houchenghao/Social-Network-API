@@ -53,34 +53,34 @@ module.exports = {
             }else{
                 res.json(thoughtData);
             }
-
-            // thoughtDataOriginal = await Thought.findOne(
-            //     { _id: req.params.thoughtId }
-            // );
-            // if(!thoughtDataOriginal){
-            //     res.status(404).json({message:'No Thought with id'})
-            // }else{
-            //     userWithThisThought = await User.findOne(
-            //         { thoughts: {$in: thoughtDataOriginal._id}}
-            //     );
-
-            //     if(userWithThisThought._id === req.body.userId){
-            //         thoughtData = await Thought.findOneAndUpdate(
-            //             { _id:req.params.thoughtId },
-            //             { $set: req.body},
-            //             { runValidators: true, new: true}
-            //         )
-            //         res.json(thoughtData)
-            //     }else{
-
-            //     }
-                    
-            // }
-
-
             
         }catch(err){
             res.status(500).json(err);
         }
-    }
+    },
+
+    async deleteThought(req,res) {
+        try{
+            thoughtData = await Thought.findOneAndRemove(
+                {_id: req.params.thoughtId},
+            );
+            if(!thoughtData){
+                res.status(404).json({message:'No thought with this id'})
+            }else{
+                userData = await User.findOneAndUpdate(
+                    { thoughts: req.params.thoughtId },
+                    { $pull: { thoughts: req.params.thoughtId}},
+                    { new: true }
+                );
+                if(!userData){
+                    res.status(404).json({message:'No User with this thought'})
+                }else{
+                    res.json(thoughtData);
+                }
+            }
+        }catch(err){
+            res.status(500).json(err);
+        }
+    },
+
 }
