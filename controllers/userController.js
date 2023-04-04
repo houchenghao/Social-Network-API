@@ -30,7 +30,7 @@ module.exports = {
             if(!userData){
                 res.status(404).json({ message: 'No user with that ID'})
             }else{
-                res.json(userData)
+                res.json(userData);
             };
         } catch(err) {
             res.status(500).json(err);
