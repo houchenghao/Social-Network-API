@@ -73,7 +73,7 @@ module.exports = {
                     { new: true }
                 );
                 if(!userData){
-                    res.status(404).json({message:'No User with this thought'})
+                    res.status(404).json({message:'No User with this thought'});
                 }else{
                     res.json(thoughtData);
                 }
@@ -83,4 +83,36 @@ module.exports = {
         }
     },
 
+    async createReaction(req,res){
+        try{
+            thoughtData = await Thought.findOneAndUpdate(
+                { _id: req.params.thoughtId },
+                { $addToSet: { reactions: req.body }},
+                { runValidators: true, new: true }
+            );
+            if(!thoughtData){
+                res.status(404).json({ message: 'No thought found with that ID'});
+            }else{
+                res.json(thoughtData);
+            }
+        }catch(err){
+            res.status(500).json(err);
+        }
+    },
+    async deleteReaction(req,res){
+        try{
+            thoughtData = await Thought.findOneAndUpdate(
+                { _id:req.params.thoughtId },
+                { $pull: { reactions: {reactionID: req.params.reactionId }}},
+                { runValidators: true, new: true }
+            );
+            if(!thoughtData){
+                res.status(404).json({message: 'No thought found with that ID'})
+            }else{
+                res.json(thoughtData);
+            }
+        }catch(err){
+            res.status(500).json(err);
+        }
+    }
 }
