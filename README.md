@@ -9,8 +9,8 @@ Express
 Validator
 
 ## Link
-repository: https://github.com/houchenghao/Social-Network-API
-video: https://watch.screencastify.com/v/y6tcDJsdq2E3TeqSHiTM
+repository: https://github.com/houchenghao/E-Commerce-Back-End
+video: https://watch.screencastify.com/v/oyrdhUOogxQSrX3GehmL
 
 
 
