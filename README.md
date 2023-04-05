@@ -10,7 +10,7 @@ Validator
 
 ## Link
 repository: https://github.com/houchenghao/E-Commerce-Back-End
-video: https://watch.screencastify.com/v/oyrdhUOogxQSrX3GehmL
+video: https://watch.screencastify.com/v/CSnHIB1ikyIknKGLuiFM
 
 
 
