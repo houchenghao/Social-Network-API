@@ -41,7 +41,7 @@ module.exports = {
             res.status(500).json(err);
         }
     },
-    async updateUser(req,res){
+    async updateThought(req,res){
         try{
             thoughtData = await Thought.findOneAndUpdate(
                 { _id: req.params.thoughtId},

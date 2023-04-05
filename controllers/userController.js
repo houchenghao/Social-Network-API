@@ -27,6 +27,18 @@ module.exports = {
                 }
             )
             .select('-__v')
+            .populate([
+                {   
+                    path:'friends',
+                    select:'-__v',
+                },
+                {
+                    path: 'thoughts',
+                    select:'-__v'
+                }
+            ]);
+            
+
             if(!userData){
                 res.status(404).json({ message: 'No user with that ID'})
             }else{
